@@ -1,0 +1,38 @@
+{
+  "name": "phpdevcommunity/paper-orm-bundle",
+  "description": "PaperORMBundle is a Symfony bundle that integrates PaperORM, a lightweight and performant PHP ORM.",
+  "type": "symfony-bundle",
+  "license": "MPL-2.0",
+  "authors": [
+    {
+      "name": "F. Michel",
+      "homepage": "https://www.phpdevcommunity.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PhpDevCommunity\\PaperORMBundle\\": "src",
+      "Test\\PhpDevCommunity\\PaperORMBundle\\": "tests"
+    }
+  },
+  "require": {
+    "php": ">=7.4",
+    "ext-pdo": "*",
+    "phpdevcommunity/paper-orm": "^1.0.0@alpha",
+    "symfony/http-kernel": "^5.4 || ^6.0 || ^7.0",
+    "symfony/dependency-injection": "^5.4 || ^6.0 || ^7.0",
+    "symfony/config": "^5.4 || ^6.0 || ^7.0",
+    "symfony/console": "^5.4 || ^6.0 || ^7.0",
+    "symfony/yaml": "^5.4 || ^6.0 || ^7.0",
+    "monolog/monolog": "^2.10|^3.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": false
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6|^10.5",
+    "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0"
+  }
+}

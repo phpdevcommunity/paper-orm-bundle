@@ -1,0 +1,37 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+  paper.stream_handler:
+    class: Monolog\Handler\StreamHandler
+    arguments:
+      - '%kernel.project_dir%/var/paper.log'
+      - 'debug'
+
+  paper.logger:
+    class: Monolog\Logger
+    arguments:
+      - 'paper'                 # nom du channel
+      - [ '@paper.stream_handler' ]
+
+  PhpDevCommunity\PaperORM\Migration\PaperMigration:
+    factory: ['PhpDevCommunity\PaperORM\Migration\PaperMigration', 'create']
+    arguments:
+      - '@PhpDevCommunity\PaperORM\EntityManager'
+      - '%paper_orm.migrations_table%'
+      - '%paper_orm.migrations_dir%'
+
+  PhpDevCommunity\PaperORM\EntityManager:
+    factory: ['PhpDevCommunity\PaperORM\EntityManager', 'createFromDsn']
+    arguments:
+      - '%paper_orm.dsn%'
+      - '%paper_orm.debug%'
+      - ~
+
+  PhpDevCommunity\PaperORM\EntityManagerInterface:
+    alias: PhpDevCommunity\PaperORM\EntityManager
+    public: false
+
+  PhpDevCommunity\PaperORMBundle\Command\:
+    resource: '../src/Command'
+    tags: ['console.command']

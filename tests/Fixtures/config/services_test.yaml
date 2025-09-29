@@ -1,0 +1,9 @@
+services:
+  PhpDevCommunity\PaperORM\EntityManagerInterface:
+    alias: PhpDevCommunity\PaperORM\EntityManager
+    public: true
+  PhpDevCommunity\PaperORMBundle\Command\:
+    resource: '../../../src/Command/*'
+    tags: ['console.command']
+    public: true
+    autowire: true
