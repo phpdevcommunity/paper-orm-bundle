@@ -1,17 +1,17 @@
 <?php
 namespace PhpDevCommunity\PaperORMBundle;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use PhpDevCommunity\PaperORM\Proxy\ProxyFactory;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Config\FileLocator;
+
 
 final class PaperORMBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function boot()
     {
-        parent::build($container);
-
+        if ($this->container->getParameter('paper_orm.proxy_autoload')) {
+            ProxyFactory::registerAutoloader();
+        }
     }
 
     public function getPath() : string

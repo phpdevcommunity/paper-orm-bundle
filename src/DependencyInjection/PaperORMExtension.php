@@ -23,6 +23,7 @@ final class PaperORMExtension extends Extension
         $container->setParameter('paper_orm.entity_dir', $config['entity_dir']);
         $container->setParameter('paper_orm.migrations_dir', $config['migrations_dir']);
         $container->setParameter('paper_orm.migrations_table', $config['migrations_table']);
+        $container->setParameter('paper_orm.proxy_autoload', $config['proxy_autoload'] ?? false);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../../config'));
         $loader->load('services.yaml');

@@ -5,3 +5,4 @@ paper_orm:
   entity_dir: '%kernel.project_dir%/src/Entity'
   migrations_dir: '%kernel.project_dir%/migrations'
   migrations_table: 'mig_versions'
+  proxy_autoload: true

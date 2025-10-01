@@ -5,7 +5,7 @@ services:
   paper.stream_handler:
     class: Monolog\Handler\StreamHandler
     arguments:
-      - '%kernel.project_dir%/var/paper.log'
+      - '%kernel.logs_dir%/paper.log'
       - 'debug'
 
   paper.logger:

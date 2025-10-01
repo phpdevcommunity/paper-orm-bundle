@@ -42,6 +42,11 @@ final class Configuration implements ConfigurationInterface
             ->info('Database table name used to track executed migrations')
             ->defaultValue('mig_versions')
             ->end()
+
+            ->booleanNode('proxy_autoload')
+            ->info('Enable proxy autoload')
+            ->defaultFalse()
+            ->end()
             ->end()
         ;
 

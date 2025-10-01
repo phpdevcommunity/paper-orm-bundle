@@ -37,6 +37,7 @@ final class BundleIntegrationTest extends KernelTestCase
         $this->assertStringEndsWith('/tests/Fixtures/src/Entity', $container->getParameter('paper_orm.entity_dir'));
         $this->assertStringEndsWith('/tests/Fixtures/migrations', $container->getParameter('paper_orm.migrations_dir'));
         $this->assertSame('mig_versions', $container->getParameter('paper_orm.migrations_table'));
+        $this->assertFalse($container->getParameter('paper_orm.proxy_autoload'));
 
     }
 }
