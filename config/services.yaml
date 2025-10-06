@@ -41,4 +41,4 @@ services:
     arguments:
       - '@PhpDevCommunity\PaperORM\EntityManager'
     tags:
-      - { name: data_collector, template: '@PaperORM/Collector/paper_orm.html.twig', id: 'paper_orm' }
+      - { name: data_collector, id: 'paper_orm' }

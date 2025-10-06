@@ -3,11 +3,12 @@
 namespace PhpDevCommunity\PaperORMBundle\DataCollector;
 
 use PhpDevCommunity\PaperORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
-class PaperORMCollector extends DataCollector
+class PaperORMCollector extends AbstractDataCollector
 {
 
     private EntityManagerInterface $em;
@@ -32,9 +33,13 @@ class PaperORMCollector extends DataCollector
         }
     }
 
+    public static function getTemplate(): ?string
+    {
+        return dirname(__DIR__ ). '/Resources/views/Collector/paper_orm.html.twig';
+    }
     public function getName() : string
     {
-        return 'paper_orm';
+        return 'data_collector/paper_orm.html.twig';
     }
 
     public function getQueryCount(): int
