@@ -4,11 +4,12 @@ namespace PhpDevCommunity\PaperORMBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Reference;
 
-final class PaperORMExtension extends Extension
+final class PaperORMExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -33,4 +34,14 @@ final class PaperORMExtension extends Extension
             $definition->replaceArgument(2, new Reference($config['logger']));
         }
     }
+    public function prepend(ContainerBuilder $container): void
+    {
+        $container->prependExtensionConfig('twig', [
+            'paths' => [
+                dirname(__DIR__, 2).'/templates' => 'PaperORMBundle'
+            ]
+        ]);
+    }
+
 }
+

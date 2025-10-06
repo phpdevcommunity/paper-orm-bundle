@@ -38,7 +38,5 @@ services:
     tags: ['console.command']
 
   PhpDevCommunity\PaperORMBundle\DataCollector\PaperORMCollector:
-    arguments:
-      - '@PhpDevCommunity\PaperORM\EntityManager'
     tags:
-      - { name: data_collector, id: 'paper_orm' }
+      - { name: data_collector, template: '@PaperORMBundle/data_collector/template.html.twig', id: 'paper_orm' }

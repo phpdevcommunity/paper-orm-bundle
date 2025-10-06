@@ -10,7 +10,7 @@ This bundle provides seamless integration into Symfony: configuration via `confi
 ## 🚀 Installation
 
 ```bash
-composer require phpdevcommunity/paper-orm-bundle:1.0.2-alpha
+composer require phpdevcommunity/paper-orm-bundle:1.0.6-alpha
 ```
 
 This will install both the bundle and the core [PaperORM](https://github.com/phpdevcommunity/paper-orm).
