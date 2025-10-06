@@ -68,7 +68,7 @@ class CommandTest extends KernelTestCase
 
         $this->assertSame(0, $exitCode, 'Command should return success code 0');
         $this->assertStringContainsString(
-            '[OK] ✅ The SQL database has been successfully dropped.',
+            '[OK] The SQL database has been successfully dropped.',
             $commandTester->getDisplay()
         );
     }
