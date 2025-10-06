@@ -33,13 +33,9 @@ class PaperORMCollector extends AbstractDataCollector
         }
     }
 
-    public static function getTemplate(): ?string
-    {
-        return dirname(__DIR__ ). '/Resources/views/Collector/paper_orm.html.twig';
-    }
     public function getName() : string
     {
-        return 'data_collector/paper_orm.html.twig';
+        return 'paper_orm';
     }
 
     public function getQueryCount(): int
@@ -55,5 +51,10 @@ class PaperORMCollector extends AbstractDataCollector
     public function getQueries(): array
     {
         return $this->data['queries'] ?? [];
+    }
+
+    public function reset()
+    {
+        $this->data = [];
     }
 }
