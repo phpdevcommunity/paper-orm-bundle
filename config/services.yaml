@@ -21,6 +21,7 @@ services:
       - '%paper_orm.migrations_table%'
       - '%paper_orm.migrations_dir%'
 
+
   PhpDevCommunity\PaperORM\EntityManager:
     factory: ['PhpDevCommunity\PaperORM\EntityManager', 'createFromDsn']
     arguments:
@@ -35,3 +36,9 @@ services:
   PhpDevCommunity\PaperORMBundle\Command\:
     resource: '../src/Command'
     tags: ['console.command']
+
+  PhpDevCommunity\PaperORMBundle\DataCollector\PaperORMCollector:
+    arguments:
+      - '@PhpDevCommunity\PaperORM\EntityManager'
+    tags:
+      - { name: data_collector, template: '@PaperORM/Collector/paper_orm.html.twig', id: 'paper_orm' }

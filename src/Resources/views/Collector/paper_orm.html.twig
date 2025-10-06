@@ -1,0 +1,58 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <span class="sf-toolbar-value">{{ collector.queryCount }}</span>
+        <span class="sf-toolbar-label">SQL</span>
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Queries</b>
+            <span>{{ collector.queryCount }}</span>
+        </div>
+        <div class="sf-toolbar-info-piece">
+            <b>Total time</b>
+            <span>{{ '%0.2f'|format(collector.totalTime) }} ms</span>
+        </div>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url }) }}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">🗃️</span>
+        <strong>PaperORM</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>PaperORM Queries</h2>
+
+    <p>
+        <strong>{{ collector.queryCount }}</strong> queries executed
+        in <strong>{{ '%0.2f'|format(collector.totalTime) }} s</strong>
+    </p>
+
+    <table class="alt">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>SQL</th>
+            <th>Time (ms)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for query in collector.queries %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><code>{{ query.sql }}</code></td>
+                <td>{{ '%0.2f'|format(query.time) }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="3"><em>No queries logged</em></td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
