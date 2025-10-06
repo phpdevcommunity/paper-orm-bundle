@@ -10,7 +10,7 @@ This bundle provides seamless integration into Symfony: configuration via `confi
 ## 🚀 Installation
 
 ```bash
-composer require phpdevcommunity/paper-orm-bundle:1.0.0-alpha
+composer require phpdevcommunity/paper-orm-bundle:1.0.2-alpha
 ```
 
 This will install both the bundle and the core [PaperORM](https://github.com/phpdevcommunity/paper-orm).
@@ -44,13 +44,14 @@ paper_orm:
 ### Options
 
 | Key                | Type   | Default                           | Description                                 |
-| ------------------ | ------ | --------------------------------- | ------------------------------------------- |
+|--------------------| ------ | --------------------------------- |---------------------------------------------|
 | `dsn`              | string | *(required)*                      | Database DSN                                |
 | `debug`            | bool   | `false`                           | Enable verbose debugging                    |
 | `logger`           | string | `null`                            | Service ID of a logger (ex: `paper.logger`) |
 | `entity_dir`       | string | `%kernel.project_dir%/src/Entity` | Path to your entities                       |
 | `migrations_dir`   | string | `%kernel.project_dir%/migrations` | Path to migration files                     |
 | `migrations_table` | string | `mig_versions`                    | Table name used for migration tracking      |
+| `proxy_autoload`   | bool   | `false`                           | Enable Proxy autoload for session           |
 
 ---
 
@@ -93,5 +94,5 @@ Full ORM usage, entity mapping, and repositories are documented in the main **Pa
 
 ## 📌 Status
 
-This bundle is in **alpha (1.0.0-alpha)**.
+This bundle is in **alpha (1.0.1-alpha)**.
 We welcome early feedback, bug reports, and contributions.

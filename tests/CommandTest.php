@@ -4,6 +4,7 @@ namespace Test\PhpDevCommunity\PaperORMBundle;
 
 use PhpDevCommunity\PaperORMBundle\Command\PaperDatabaseCreateCommand;
 use PhpDevCommunity\PaperORMBundle\Command\PaperDatabaseDropCommand;
+use PhpDevCommunity\PaperORMBundle\Command\PaperDatabaseSyncCommand;
 use PhpDevCommunity\PaperORMBundle\Command\PaperMigrationDiffCommand;
 use PhpDevCommunity\PaperORMBundle\Command\PaperMigrationMigrateCommand;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -67,7 +68,27 @@ class CommandTest extends KernelTestCase
 
         $this->assertSame(0, $exitCode, 'Command should return success code 0');
         $this->assertStringContainsString(
-            '[OK] The SQL database has been successfully dropped.',
+            '[OK] ✅ The SQL database has been successfully dropped.',
+            $commandTester->getDisplay()
+        );
+    }
+
+    public function testDatabaseSyncCommand(): void
+    {
+        self::bootKernel();
+        $application = new Application(self::$kernel);
+
+        $command = self::$kernel->getContainer()->get(PaperDatabaseSyncCommand::class);
+        $application->add($command);
+
+        $commandTester = new CommandTester($application->find('paper:database:sync'));
+        $exitCode = $commandTester->execute([
+        ]);
+
+
+        $this->assertSame(0, $exitCode, 'Command should return success code 0');
+        $this->assertStringContainsString(
+            'No differences detected — all entities are already in sync with the database schema.',
             $commandTester->getDisplay()
         );
     }
