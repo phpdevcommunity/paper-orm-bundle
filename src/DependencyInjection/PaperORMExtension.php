@@ -2,6 +2,7 @@
 
 namespace PhpDevCommunity\PaperORMBundle\DependencyInjection;
 
+use PhpDevCommunity\PaperORM\PaperConfiguration;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -29,10 +30,6 @@ final class PaperORMExtension extends Extension implements PrependExtensionInter
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../../config'));
         $loader->load('services.yaml');
 
-        if ($container->hasDefinition(\PhpDevCommunity\PaperORM\EntityManager::class)) {
-            $definition = $container->getDefinition(\PhpDevCommunity\PaperORM\EntityManager::class);
-            $definition->replaceArgument(2, new Reference($config['logger']));
-        }
     }
     public function prepend(ContainerBuilder $container): void
     {

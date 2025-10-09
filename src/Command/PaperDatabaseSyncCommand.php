@@ -3,6 +3,7 @@
 namespace PhpDevCommunity\PaperORMBundle\Command;
 
 use http\Encoding\Stream;
+use PhpDevCommunity\PaperORM\Collector\EntityDirCollector;
 use PhpDevCommunity\PaperORM\Command\DatabaseCreateCommand;
 use PhpDevCommunity\PaperORM\Command\DatabaseSyncCommand;
 use PhpDevCommunity\PaperORM\EntityManagerInterface;
@@ -19,18 +20,19 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class PaperDatabaseSyncCommand extends Command
 {
     private PaperMigration $migration;
-    private string $entitiesDir;
+
+    private EntityDirCollector $entityDirCollector;
 
     /**
      * @var string
      */
     private $env;
 
-    public function __construct(PaperMigration $migration, ParameterBagInterface $params)
+    public function __construct(PaperMigration $migration, EntityDirCollector $entityDirCollector, ParameterBagInterface $params)
     {
         parent::__construct();
         $this->migration = $migration;
-        $this->entitiesDir = $params->get('paper_orm.entity_dir');
+        $this->entityDirCollector = $entityDirCollector;
         $this->env = $params->get('kernel.environment');
     }
 
@@ -49,7 +51,8 @@ class PaperDatabaseSyncCommand extends Command
         if ($noExecute) {
             $options = ['--no-execute'];
         }
-        return PhpDevCommunityConsoleWrapper::executeForSymfony(new DatabaseSyncCommand($this->migration, $this->entitiesDir, strtolower($this->env)), [], $options, function ($message) use ($output) {
+        return PhpDevCommunityConsoleWrapper::executeForSymfony(
+            new DatabaseSyncCommand($this->migration, $this->entityDirCollector, strtolower($this->env)), [], $options, function ($message) use ($output) {
             $output->write($message);
         });
     }

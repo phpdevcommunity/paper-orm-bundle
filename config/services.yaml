@@ -14,6 +14,18 @@ services:
       - 'paper'                 # nom du channel
       - [ '@paper.stream_handler' ]
 
+  PhpDevCommunity\PaperORM\Collector\EntityDirCollector:
+    factory: ['PhpDevCommunity\PaperORM\Collector\EntityDirCollector', 'bootstrap']
+    arguments:
+      - ['%paper_orm.entity_dir%']
+  PhpDevCommunity\PaperORM\PaperConfiguration:
+    factory: ['PhpDevCommunity\PaperORM\PaperConfiguration', 'fromDsn']
+    arguments:
+      - '%paper_orm.dsn%'
+      - '%paper_orm.debug%'
+    calls:
+          - [ withLogger, [ '@paper.logger' ] ]
+
   PhpDevCommunity\PaperORM\Migration\PaperMigration:
     factory: ['PhpDevCommunity\PaperORM\Migration\PaperMigration', 'create']
     arguments:
@@ -21,13 +33,10 @@ services:
       - '%paper_orm.migrations_table%'
       - '%paper_orm.migrations_dir%'
 
-
   PhpDevCommunity\PaperORM\EntityManager:
-    factory: ['PhpDevCommunity\PaperORM\EntityManager', 'createFromDsn']
+    factory: ['PhpDevCommunity\PaperORM\EntityManager', 'createFromConfig']
     arguments:
-      - '%paper_orm.dsn%'
-      - '%paper_orm.debug%'
-      - ~
+      - '@PhpDevCommunity\PaperORM\PaperConfiguration'
 
   PhpDevCommunity\PaperORM\EntityManagerInterface:
     alias: PhpDevCommunity\PaperORM\EntityManager

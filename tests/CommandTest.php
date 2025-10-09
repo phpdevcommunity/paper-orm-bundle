@@ -25,6 +25,12 @@ class CommandTest extends KernelTestCase
         self::bootKernel();
     }
 
+    protected function tearDown(): void
+    {
+        $folder = self::$kernel->getContainer()->getParameter('kernel.project_dir') . '/migrations';
+        array_map('unlink', glob("$folder/*.*"));
+    }
+
     public function testCreateDatabaseCommand(): void
     {
         self::bootKernel();
@@ -88,7 +94,7 @@ class CommandTest extends KernelTestCase
 
         $this->assertSame(0, $exitCode, 'Command should return success code 0');
         $this->assertStringContainsString(
-            'No differences detected — all entities are already in sync with the database schema.',
+            'Normal entities : 0',
             $commandTester->getDisplay()
         );
     }
@@ -107,7 +113,7 @@ class CommandTest extends KernelTestCase
 
         $this->assertSame(0, $exitCode, 'Command should return success code 0');
         $this->assertStringContainsString(
-            '[INFO] No migration file was generated — all entities are already in sync with the database schema.',
+            '[INFO] No application migration file was generated — schema already in sync.',
             $commandTester->getDisplay()
         );
     }
@@ -130,5 +136,6 @@ class CommandTest extends KernelTestCase
             '[INFO] No migrations to run. The database is already up to date.',
             $commandTester->getDisplay()
         );
+
     }
 }

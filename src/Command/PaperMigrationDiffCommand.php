@@ -2,16 +2,13 @@
 
 namespace PhpDevCommunity\PaperORMBundle\Command;
 
-use PhpDevCommunity\Console\CommandRunner;
-use PhpDevCommunity\PaperORM\Command\DatabaseCreateCommand;
+use PhpDevCommunity\PaperORM\Collector\EntityDirCollector;
 use PhpDevCommunity\PaperORM\Command\Migration\MigrationDiffCommand;
-use PhpDevCommunity\PaperORM\EntityManagerInterface;
 use PhpDevCommunity\PaperORM\Migration\PaperMigration;
 use PhpDevCommunity\PaperORMBundle\Tools\PhpDevCommunityConsoleWrapper;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -19,13 +16,14 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class PaperMigrationDiffCommand extends Command
 {
     private PaperMigration $migration;
-    private string $entitiesDir;
+    private EntityDirCollector $entityDirCollector;
 
-    public function __construct(PaperMigration $migration, ParameterBagInterface $params)
+
+    public function __construct(PaperMigration $migration, EntityDirCollector $entityDirCollector)
     {
         parent::__construct();
         $this->migration = $migration;
-        $this->entitiesDir = $params->get('paper_orm.entity_dir');
+        $this->entityDirCollector = $entityDirCollector;
     }
 
     protected function configure(): void
@@ -37,7 +35,8 @@ class PaperMigrationDiffCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return PhpDevCommunityConsoleWrapper::executeForSymfony(new MigrationDiffCommand($this->migration, $this->entitiesDir), [], [], function ($message) use ($output) {
+        return PhpDevCommunityConsoleWrapper::executeForSymfony(
+            new MigrationDiffCommand($this->migration, $this->entityDirCollector), [], [], function ($message) use ($output) {
             $output->write($message);
         });
     }
